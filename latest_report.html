@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AWS AI Governance Scan Report (All Buckets)</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #232f3e; }
+        h2 { color: #ff9900; }
+        .summary { background: #f0f0f0; padding: 15px; border-radius: 5px; }
+        .critical { color: #d13212; font-weight: bold; }
+        .high { color: #ff9900; font-weight: bold; }
+        .medium { color: #1d8102; }
+        .low { color: #879596; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #232f3e; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .risk-score { font-size: 48px; font-weight: bold; }
+        .badge { display: inline-block; padding: 5px 10px; border-radius: 3px; color: white; }
+        .badge-all { background-color: #0073bb; }
+    </style>
+</head>
+<body>
+    <h1>AWS AI Governance Framework - Security Scan Report</h1>
+    <span class="badge badge-all">ALL BUCKETS MODE</span>
+    
+    <div class="summary">
+        <h2>Executive Summary</h2>
+        <p><strong>Scan Date:</strong> 2025-10-13T16:21:01.666100</p>
+        <p><strong>Region:</strong> us-east-1</p>
+        <p><strong>Scan Mode:</strong> All S3 Buckets (not just SageMaker-related)</p>
+        <p><strong>Total Findings:</strong> 27</p>
+        <p><strong>Risk Score:</strong> <span class="risk-score">100/100</span></p>
+    </div>
+    
+    <h2>Severity Breakdown</h2>
+    <table>
+        <tr>
+            <th>Severity</th>
+            <th>Count</th>
+        </tr>
+        <tr>
+            <td class="critical">CRITICAL</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td class="high">HIGH</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>14</td>
+        </tr>
+        <tr>
+            <td class="low">LOW</td>
+            <td>2</td>
+        </tr>
+    </table>
+    
+    <h2>Top Violated Controls</h2>
+    <table>
+        <tr>
+            <th>Control</th>
+            <th>Violations</th>
+        </tr>
+        <tr><td>ISO 27701 6.4.3</td><td>14</td></tr>
+        <tr><td>ISO 27001 A.5.12</td><td>10</td></tr>
+        <tr><td>ISO 27701 6.4.1</td><td>8</td></tr>
+        <tr><td>ISO 27001 A.5.34</td><td>8</td></tr>
+        <tr><td>ISO 27701 6.6.1</td><td>3</td></tr>
+        <tr><td>ISO 42001 6.3.2</td><td>3</td></tr>
+
+    </table>
+    
+    <h2>Detailed Findings</h2>
+    <h3>SAGEMAKER Scanner (0 findings)</h3>
+    <h3>IAM Scanner (0 findings)</h3>
+    <h3>S3 Scanner (27 findings)</h3>
+    <table>
+        <tr>
+            <th>Severity</th>
+            <th>Resource</th>
+            <th>Issue</th>
+            <th>Control</th>
+        </tr>
+        <tr>
+            <td class="high">HIGH</td>
+            <td>accounttrail-logs-admin</td>
+            <td>No tags configured</td>
+            <td>ISO 27001 A.5.12, ISO 27701 6.4.1</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>accounttrail-logs-admin</td>
+            <td>Versioning not enabled</td>
+            <td>ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>accounttrail-logs-admin</td>
+            <td>No lifecycle policy configured</td>
+            <td>ISO 27001 A.5.34, ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="high">HIGH</td>
+            <td>ajwill-portfolio-335380200154</td>
+            <td>Missing DataClassification tag</td>
+            <td>ISO 27001 A.5.12, ISO 27701 6.4.1</td>
+        </tr>
+        <tr>
+            <td class="low">LOW</td>
+            <td>ajwill-portfolio-335380200154</td>
+            <td>Missing required tags: Owner, Purpose</td>
+            <td>ISO 27001 A.5.12</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>ajwill-portfolio-335380200154</td>
+            <td>No lifecycle policy configured</td>
+            <td>ISO 27001 A.5.34, ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="high">HIGH</td>
+            <td>amplify-humanriskintelligenc-staging-773e5-deployment</td>
+            <td>Missing DataClassification tag</td>
+            <td>ISO 27001 A.5.12, ISO 27701 6.4.1</td>
+        </tr>
+        <tr>
+            <td class="low">LOW</td>
+            <td>amplify-humanriskintelligenc-staging-773e5-deployment</td>
+            <td>Missing required tags: Owner, Purpose</td>
+            <td>ISO 27001 A.5.12</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>amplify-humanriskintelligenc-staging-773e5-deployment</td>
+            <td>Versioning not enabled</td>
+            <td>ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>amplify-humanriskintelligenc-staging-773e5-deployment</td>
+            <td>No lifecycle policy configured</td>
+            <td>ISO 27001 A.5.34, ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="high">HIGH</td>
+            <td>aws-cloudtrail-logs-335380200154-3c2a0cc2</td>
+            <td>No tags configured</td>
+            <td>ISO 27001 A.5.12, ISO 27701 6.4.1</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>aws-cloudtrail-logs-335380200154-3c2a0cc2</td>
+            <td>Versioning not enabled</td>
+            <td>ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>aws-cloudtrail-logs-335380200154-3c2a0cc2</td>
+            <td>No lifecycle policy configured</td>
+            <td>ISO 27001 A.5.34, ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="high">HIGH</td>
+            <td>hri-news-1755629174</td>
+            <td>No tags configured</td>
+            <td>ISO 27001 A.5.12, ISO 27701 6.4.1</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>hri-news-1755629174</td>
+            <td>Versioning not enabled</td>
+            <td>ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>hri-news-1755629174</td>
+            <td>No lifecycle policy configured</td>
+            <td>ISO 27001 A.5.34, ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="critical">CRITICAL</td>
+            <td>hri-news-1755629174</td>
+            <td>Public access not fully blocked</td>
+            <td>ISO 27701 6.6.1, ISO 42001 6.3.2</td>
+        </tr>
+        <tr>
+            <td class="high">HIGH</td>
+            <td>hri-webhosting</td>
+            <td>No tags configured</td>
+            <td>ISO 27001 A.5.12, ISO 27701 6.4.1</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>hri-webhosting</td>
+            <td>Versioning not enabled</td>
+            <td>ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>hri-webhosting</td>
+            <td>No lifecycle policy configured</td>
+            <td>ISO 27001 A.5.34, ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="critical">CRITICAL</td>
+            <td>hri-webhosting</td>
+            <td>Public access not fully blocked</td>
+            <td>ISO 27701 6.6.1, ISO 42001 6.3.2</td>
+        </tr>
+        <tr>
+            <td class="high">HIGH</td>
+            <td>human-risk-intelligence</td>
+            <td>No tags configured</td>
+            <td>ISO 27001 A.5.12, ISO 27701 6.4.1</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>human-risk-intelligence</td>
+            <td>Versioning not enabled</td>
+            <td>ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>human-risk-intelligence</td>
+            <td>No lifecycle policy configured</td>
+            <td>ISO 27001 A.5.34, ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="high">HIGH</td>
+            <td>www.humanriskintel.com</td>
+            <td>No tags configured</td>
+            <td>ISO 27001 A.5.12, ISO 27701 6.4.1</td>
+        </tr>
+        <tr>
+            <td class="medium">MEDIUM</td>
+            <td>www.humanriskintel.com</td>
+            <td>No lifecycle policy configured</td>
+            <td>ISO 27001 A.5.34, ISO 27701 6.4.3</td>
+        </tr>
+        <tr>
+            <td class="critical">CRITICAL</td>
+            <td>www.humanriskintel.com</td>
+            <td>Public access not fully blocked</td>
+            <td>ISO 27701 6.6.1, ISO 42001 6.3.2</td>
+        </tr>
+    </table>
+
+</body>
+</html>
