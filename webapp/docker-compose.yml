@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: grc_postgres
+    environment:
+      POSTGRES_DB: grc_governance
+      POSTGRES_USER: grc_user
+      POSTGRES_PASSWORD: grc_password_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U grc_user -d grc_governance"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for Celery task queue
+  redis:
+    image: redis:7-alpine
+    container_name: grc_redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # FastAPI Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: grc_backend
+    environment:
+      - DATABASE_URL=postgresql://grc_user:grc_password_dev@postgres:5432/grc_governance
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=dev_secret_key_change_in_production
+      - ENVIRONMENT=development
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ../scanners:/app/scanners
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Celery Worker for background scans
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: grc_celery_worker
+    environment:
+      - DATABASE_URL=postgresql://grc_user:grc_password_dev@postgres:5432/grc_governance
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=dev_secret_key_change_in_production
+    volumes:
+      - ./backend:/app
+      - ../scanners:/app/scanners
+    depends_on:
+      - postgres
+      - redis
+    command: celery -A app.tasks worker --loglevel=info
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: grc_frontend
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres_data:
