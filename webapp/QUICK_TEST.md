@@ -67,7 +67,7 @@ open governance_scan_all_report.html
 
 ## Option 4: Portfolio Presentation Mode
 
-For your portfolio/Aura application, you can:
+For your portfolio and job applications, you can:
 
 ### 1. Show the GitHub Repository
 - URL: https://github.com/ajwill85/aws-ai-governance-framework
@@ -134,7 +134,7 @@ Deploy to a free tier service:
 
 ## Recommendation
 
-**For Aura Application (Next Week):**
+**For Job Applications:**
 1. ✅ Use GitHub repo to show code
 2. ✅ Demo CLI scanner with real AWS results
 3. ✅ Walk through web app architecture

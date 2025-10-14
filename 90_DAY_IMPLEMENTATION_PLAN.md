@@ -2,8 +2,8 @@
 ## AWS AI Governance Framework with Policy-as-Code
 
 **Project**: AWS AI Governance Framework  
-**Role**: GRC Engineer (AI & Privacy) - Aura  
-**Timeline**: First 90 Days of Employment  
+**Role**: GRC Engineer (AI & Privacy)  
+**Timeline**: First 90 Days  
 **Objective**: Implement overlapping ISO 27001/27701/42001 controls with automated policy enforcement
 
 ---
