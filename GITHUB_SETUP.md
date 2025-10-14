@@ -29,7 +29,7 @@ gh repo create aws-ai-governance-framework \
 
 ### Step 2: Push to GitHub
 ```bash
-cd /Users/ajmm/Library/CloudStorage/ProtonDrive-wraithprivacy@proton.me-folder/Work/repos/grc_ai_privacy
+cd /path/to/grc_ai_privacy
 
 # Add remote
 git remote add origin https://github.com/ajwill85/aws-ai-governance-framework.git

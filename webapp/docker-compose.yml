@@ -1,3 +1,16 @@
+# ⚠️  DEVELOPMENT CONFIGURATION ONLY - DO NOT USE IN PRODUCTION
+# 
+# This docker-compose file contains development credentials and should NOT be used
+# for production deployments. Before deploying to production:
+# 
+# 1. Change all passwords to strong, randomly generated values
+# 2. Generate a new SECRET_KEY using: openssl rand -hex 32
+# 3. Use environment variables or secrets management (AWS Secrets Manager)
+# 4. Enable SSL/TLS for all connections
+# 5. Review and update all security settings
+#
+# For production deployment guide, see: SETUP_GUIDE.md
+
 services:
   # PostgreSQL Database
   postgres:

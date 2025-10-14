@@ -11,7 +11,7 @@ Since Docker is not installed, here are options to test the application:
 4. Wait for Docker to start (whale icon in menu bar)
 5. Then run:
    ```bash
-   cd /Users/ajmm/Library/CloudStorage/ProtonDrive-wraithprivacy@proton.me-folder/Work/repos/grc_ai_privacy/webapp
+   cd /path/to/grc_ai_privacy/webapp
    docker-compose up -d
    ```
 
@@ -19,7 +19,7 @@ Since Docker is not installed, here are options to test the application:
 
 ### Create a Simple Test Backend
 ```bash
-cd /Users/ajmm/Library/CloudStorage/ProtonDrive-wraithprivacy@proton.me-folder/Work/repos/grc_ai_privacy/webapp/backend
+cd /path/to/grc_ai_privacy/webapp/backend
 
 # Create virtual environment
 python3 -m venv venv
@@ -56,7 +56,7 @@ curl http://localhost:8000/health
 Since the CLI scanners are already working, let's demonstrate those:
 
 ```bash
-cd /Users/ajmm/Library/CloudStorage/ProtonDrive-wraithprivacy@proton.me-folder/Work/repos/grc_ai_privacy
+cd /path/to/grc_ai_privacy
 
 # Run the all-buckets scanner (we know this works!)
 python3 scan_all_buckets.py --region us-east-1

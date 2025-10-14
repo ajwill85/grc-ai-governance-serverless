@@ -275,9 +275,9 @@ https://github.com/ajwill85/aws-ai-governance-framework
 
 ### Run Scanner
 ```bash
-cd /Users/ajmm/Library/CloudStorage/ProtonDrive-wraithprivacy@proton.me-folder/Work/repos/grc_ai_privacy
+cd /path/to/grc_ai_privacy
 python3 scan_all_buckets.py --region us-east-1
-open latest_report.html
+open governance_scan_all_report.html
 ```
 
 ### View Documentation

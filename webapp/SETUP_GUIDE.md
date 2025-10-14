@@ -21,7 +21,7 @@ Complete guide to set up and run the AWS AI Governance Web Application.
 
 ### 1. Clone and Navigate
 ```bash
-cd /Users/ajmm/Library/CloudStorage/ProtonDrive-wraithprivacy@proton.me-folder/Work/repos/grc_ai_privacy/webapp
+cd /path/to/grc_ai_privacy/webapp
 ```
 
 ### 2. Create Environment File

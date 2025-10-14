@@ -39,12 +39,16 @@ htmlcov/
 .tox/
 .mypy_cache/
 
-# Scan results
+# Scan results (may contain sensitive info like AWS account IDs)
 *_findings.json
 governance_scan_results.json
 governance_scan_all_results.json
 governance_scan_report.html
 governance_scan_all_report.html
+latest_*.json
+latest_*.html
+*_scan_*.json
+*_scan_*.html
 *.log
 
 # AWS
