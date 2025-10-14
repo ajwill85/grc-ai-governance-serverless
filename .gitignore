@@ -51,14 +51,27 @@ latest_*.html
 *_scan_*.html
 *.log
 
-# AWS
+# AWS credentials and config
 .aws/
 credentials
+config
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+*.ppk
+aws-exports.js
 
-# Environment
+# Environment variables (may contain secrets)
 .env
+.env.*
+*.env
 .env.local
 .env.production
+.env.development
+.env.test
+.env.staging
 
 # macOS
 .DS_Store
@@ -81,6 +94,9 @@ dist/
 *.pid
 *.seed
 *.pid.lock
+docker-compose.override.yml
+docker-compose.local.yml
+.dockerignore.local
 
 # Database
 *.db
