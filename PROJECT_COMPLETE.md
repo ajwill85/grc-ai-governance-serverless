@@ -74,9 +74,9 @@
 
 ---
 
-## 🎯 For Job Applications
+## 🎯 Project Showcase
 
-### Portfolio Showcase Links
+### Portfolio Links
 
 **GitHub Repository:**
 https://github.com/ajwill85/aws-ai-governance-framework
@@ -89,18 +89,31 @@ https://github.com/ajwill85/aws-ai-governance-framework
 5. **SaaS Architecture** - Multi-tenant, scalable design
 6. **Production Quality** - Docker, testing, documentation
 
-### Cover Letter Talking Points
+### Technical Highlights
 
-**Technical Implementation:**
-> "I've developed a production-ready AWS AI Governance Framework that automates compliance monitoring across ISO 27001, 27701, and 42001 standards. The project includes CLI scanners that have identified 27 real security findings in my AWS environment, a policy-as-code engine with 35+ OPA rules, and a multi-tenant web application with customizable dashboards for different stakeholder audiences."
+**Implementation:**
+- Production-ready AWS AI Governance Framework
+- Automates compliance monitoring across ISO 27001, 27701, and 42001 standards
+- CLI scanners identified 27 real security findings in AWS environment
+- Policy-as-code engine with 35+ OPA rules
+- Multi-tenant web application with customizable dashboards
 
 **Business Value:**
-> "This framework addresses the critical need for translating AI policies into technical controls. It demonstrates automated evidence collection for audits, cross-account AWS security scanning, and risk scoring algorithms—reducing manual compliance work by 80% while providing real-time visibility into AI/ML security posture."
+- Translates AI policies into automated technical controls
+- Automated evidence collection for audits
+- Cross-account AWS security scanning
+- Risk scoring algorithms
+- Reduces manual compliance work by 80%
+- Real-time visibility into AI/ML security posture
 
-**Technical Depth:**
-> "The architecture uses FastAPI for async API performance, React with TypeScript for type-safe frontend development, PostgreSQL for multi-tenant data isolation, and Docker Compose for reproducible deployments. The scanner integrates with AWS via cross-account IAM roles, ensuring read-only access with external ID validation for security."
+**Architecture:**
+- FastAPI for async API performance
+- React with TypeScript for type-safe frontend
+- PostgreSQL for multi-tenant data isolation
+- Docker Compose for reproducible deployments
+- AWS cross-account IAM roles with external ID validation
 
-### Interview Demo Flow
+### Demo Flow
 
 **1. Show GitHub Repository (2 minutes)**
 - Walk through project structure
@@ -311,7 +324,7 @@ git log --oneline
 - ⏳ Install Docker Desktop (optional)
 - ⏳ Complete web app MVP (optional)
 - ⏳ Deploy to production (optional)
-- ✅ **Use for job applications NOW!**
+- ✅ **Ready for showcase NOW!**
 
 ---
 
