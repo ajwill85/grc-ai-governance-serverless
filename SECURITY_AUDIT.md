@@ -321,7 +321,7 @@ Once you remove scan results and update paths:
 
 ## 🎯 Compliance Considerations
 
-### For Portfolio/Job Applications: ✅ ACCEPTABLE
+### For Portfolio/Public Repository: ✅ ACCEPTABLE
 
 **Why it's okay**:
 - This is a demonstration project
