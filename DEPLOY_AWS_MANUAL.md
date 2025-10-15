@@ -1,7 +1,5 @@
 # 🚀 Manual AWS Deployment Guide
 
-**AWS Account**: 335380200154  
-**User**: ajwill  
 **Region**: us-east-1
 
 ---
@@ -183,9 +181,9 @@ npx serverless deploy --stage dev --region us-east-1 --verbose
 If you already have Aurora Serverless set up:
 
 ```bash
-# Set ARNs
-export AURORA_CLUSTER_ARN="arn:aws:rds:us-east-1:335380200154:cluster:grc-aurora-dev"
-export AURORA_SECRET_ARN="arn:aws:secretsmanager:us-east-1:335380200154:secret:grc/database-dev-xxxxx"
+# Set ARNs (replace with your actual ARNs)
+export AURORA_CLUSTER_ARN="arn:aws:rds:us-east-1:YOUR_ACCOUNT_ID:cluster:grc-aurora-dev"
+export AURORA_SECRET_ARN="arn:aws:secretsmanager:us-east-1:YOUR_ACCOUNT_ID:secret:grc/database-dev-xxxxx"
 
 # Deploy
 npx serverless deploy --stage dev --region us-east-1
