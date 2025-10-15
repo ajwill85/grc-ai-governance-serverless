@@ -102,3 +102,22 @@ docker-compose.local.yml
 *.db
 *.sqlite
 *.sqlite3
+
+# Serverless
+.serverless/
+node_modules/
+.build/
+lambda/layers/
+
+# Lambda
+*.zip
+lambda-package/
+
+# Local test files
+tests/*.db
+tests/*.sqlite
+tests/*.log
+
+# Local config
+config/local.yml
+config/*.local.yml

@@ -1,0 +1,45 @@
+{
+  "family": "grc-celery-worker",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/grc-ecs-execution-role",
+  "taskRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/grc-ecs-task-role",
+  "containerDefinitions": [
+    {
+      "name": "grc-celery-worker",
+      "image": "<ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/grc-celery-worker:latest",
+      "essential": true,
+      "command": ["celery", "-A", "app.tasks", "worker", "--loglevel=info"],
+      "environment": [
+        {
+          "name": "ENVIRONMENT",
+          "value": "production"
+        },
+        {
+          "name": "REDIS_URL",
+          "value": "redis://<REDIS_ENDPOINT>:6379/0"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "DATABASE_URL",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:<ACCOUNT_ID>:secret:grc/database:host::"
+        },
+        {
+          "name": "SECRET_KEY",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:<ACCOUNT_ID>:secret:grc/application:secret_key::"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/grc-celery-worker",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

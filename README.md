@@ -332,3 +332,55 @@ This is a portfolio project demonstrating GRC engineering capabilities. For ques
 **Built with** ❤️ **for AI Governance and Privacy**
 
 *Demonstrating practical implementation of security, privacy, and AI governance controls for AWS environments.*
+
+---
+
+## 📁 Project Structure
+
+The project follows a clean, organized structure:
+
+```
+├── lambda/           # Serverless functions
+├── scanners/         # AWS resource scanners  
+├── policies/         # OPA policy rules
+├── webapp/           # Web application (FastAPI + React)
+├── scripts/          # Utility and development scripts
+├── config/           # Configuration files
+├── tests/            # Test files and databases
+├── docs/             # Quick reference documentation
+└── context_files/    # Complete documentation archive
+```
+
+See `PROJECT_STRUCTURE.md` for detailed organization.
+
+## 🚀 Quick Start
+
+### Local Development
+```bash
+# Run backend API
+python3 scripts/local/run_local_app.py
+
+# Run frontend (in another terminal)
+cd webapp/frontend && npm run dev
+```
+
+### Run Scanners
+```bash
+python3 scripts/scan_all.py --region us-east-1
+```
+
+### Deploy to AWS
+```bash
+serverless deploy --stage prod
+```
+
+## 📚 Documentation
+
+- **Quick Reference**: `docs/` directory
+- **Project Structure**: `PROJECT_STRUCTURE.md`
+- **Deployment Guides**: `context_files/deployment/`
+- **Project Documentation**: `context_files/project_docs/`
+- **Security & Cost Analysis**: `context_files/security_analysis/`
+- **Complete History**: `context_files/security_analysis/CONVERSATION_CONTEXT.md`
+
+See `context_files/README.md` for a complete documentation index.

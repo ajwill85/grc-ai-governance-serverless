@@ -1,0 +1,179 @@
+service: grc-ai-governance
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.9
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'dev'}
+  memorySize: 512
+  timeout: 30
+  
+  environment:
+    STAGE: ${self:provider.stage}
+    AURORA_CLUSTER_ARN: ${env:AURORA_CLUSTER_ARN}
+    AURORA_SECRET_ARN: ${env:AURORA_SECRET_ARN}
+    DYNAMODB_CACHE_TABLE: ${self:service}-${self:provider.stage}-cache
+    SQS_QUEUE_URL: !Ref ScanQueue
+  
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - rds-data:ExecuteStatement
+            - rds-data:BatchExecuteStatement
+          Resource: ${env:AURORA_CLUSTER_ARN}
+        - Effect: Allow
+          Action:
+            - secretsmanager:GetSecretValue
+          Resource: ${env:AURORA_SECRET_ARN}
+        - Effect: Allow
+          Action:
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:Query
+            - dynamodb:Scan
+          Resource: !GetAtt CacheTable.Arn
+        - Effect: Allow
+          Action:
+            - sqs:SendMessage
+            - sqs:ReceiveMessage
+            - sqs:DeleteMessage
+            - sqs:GetQueueAttributes
+          Resource: !GetAtt ScanQueue.Arn
+        - Effect: Allow
+          Action:
+            - s3:GetObject
+            - s3:ListBucket
+            - s3:GetBucketPolicy
+            - s3:GetBucketVersioning
+            - s3:GetBucketTagging
+            - s3:GetEncryptionConfiguration
+            - s3:GetLifecycleConfiguration
+          Resource: '*'
+        - Effect: Allow
+          Action:
+            - sagemaker:DescribeNotebookInstance
+            - sagemaker:DescribeEndpoint
+            - sagemaker:DescribeModel
+            - sagemaker:ListNotebookInstances
+            - sagemaker:ListEndpoints
+            - sagemaker:ListModels
+          Resource: '*'
+        - Effect: Allow
+          Action:
+            - iam:GetRole
+            - iam:GetRolePolicy
+            - iam:ListRoles
+            - iam:ListRolePolicies
+            - iam:ListAttachedRolePolicies
+          Resource: '*'
+
+functions:
+  api:
+    handler: lambda/api/handler.lambda_handler
+    events:
+      - httpApi:
+          path: /{proxy+}
+          method: ANY
+    layers:
+      - !Ref PythonRequirementsLambdaLayer
+  
+  scanner:
+    handler: lambda/workers/scanner.lambda_handler
+    timeout: 900
+    memorySize: 1024
+    events:
+      - sqs:
+          arn: !GetAtt ScanQueue.Arn
+          batchSize: 1
+    layers:
+      - !Ref PythonRequirementsLambdaLayer
+  
+  scheduledScan:
+    handler: lambda/workers/scheduled.lambda_handler
+    timeout: 900
+    memorySize: 1024
+    events:
+      - schedule:
+          rate: cron(0 2 * * ? *)
+          description: 'Daily governance scan at 2 AM UTC'
+    layers:
+      - !Ref PythonRequirementsLambdaLayer
+
+layers:
+  pythonRequirements:
+    path: lambda/layers
+    compatibleRuntimes:
+      - python3.9
+
+resources:
+  Resources:
+    CacheTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:service}-${self:provider.stage}-cache
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: key
+            AttributeType: S
+        KeySchema:
+          - AttributeName: key
+            KeyType: HASH
+        TimeToLiveSpecification:
+          Enabled: true
+          AttributeName: ttl
+    
+    ScanQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:service}-${self:provider.stage}-scan-queue
+        VisibilityTimeout: 900
+        MessageRetentionPeriod: 86400
+    
+    ResultsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:service}-${self:provider.stage}-results
+        VersioningConfiguration:
+          Status: Enabled
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+
+  Outputs:
+    ApiUrl:
+      Description: API Gateway endpoint URL
+      Value: !Sub https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com
+    
+    ScanQueueUrl:
+      Description: SQS Queue URL for scan jobs
+      Value: !Ref ScanQueue
+    
+    CacheTableName:
+      Description: DynamoDB cache table name
+      Value: !Ref CacheTable
+    
+    ResultsBucketName:
+      Description: S3 bucket for scan results
+      Value: !Ref ResultsBucket
+
+plugins:
+  - serverless-python-requirements
+  - serverless-offline
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    layer: true
+  
+  serverless-offline:
+    httpPort: 3000
+    lambdaPort: 3002
+    noPrependStageInUrl: true

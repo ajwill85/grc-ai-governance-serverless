@@ -1,0 +1,10 @@
+*.py linguist-language=Python
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript
+*.js linguist-language=JavaScript
+*.yml linguist-language=YAML
+*.rego linguist-language=Rego
+*.md linguist-documentation=true
+*.json linguist-data=true
+webapp/frontend/* linguist-vendored=false
+webapp/backend/* linguist-vendored=false
