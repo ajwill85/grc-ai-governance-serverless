@@ -121,3 +121,11 @@ tests/*.log
 # Local config
 config/local.yml
 config/*.local.yml
+
+# Context files (sensitive or large)
+context_files/scan_results/
+context_files/security_analysis/CONVERSATION_CONTEXT.md
+context_files/tests/
+context_files/legacy/
+context_files/cleanup_project.sh
+context_files/FILE_CLEANUP_PLAN.md
