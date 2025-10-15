@@ -48,8 +48,6 @@ serverless deploy --stage prod
 | **Dev scripts** | `scripts/local/` |
 | **Config files** | `config/` |
 | **Test database** | `tests/` |
-| **Quick docs** | `docs/` |
-| **Full docs** | `context_files/` |
 
 ---
 
@@ -91,9 +89,9 @@ open http://localhost:8001/docs
 python3 scripts/local/test_local.py
 ```
 
-### View Structure
+### View Project Files
 ```bash
-cat PROJECT_STRUCTURE.md
+ls -la
 ```
 
 ### Clean Up
@@ -108,20 +106,11 @@ rm tests/*.db
 
 ---
 
-## 📚 Documentation Map
+## 📚 Documentation
 
-```
-docs/                          # Quick reference
-├── LOCAL_RUNNING.md          # Server info
-├── ORGANIZATION_COMPLETE.md  # What was organized
-└── README.md                 # Docs index
-
-context_files/                 # Full documentation
-├── deployment/               # How to deploy
-├── project_docs/            # Project details
-├── security_analysis/       # Security & costs
-└── README.md               # Complete index
-```
+- `README.md` - Main project documentation
+- `DEPLOY_AWS_MANUAL.md` - AWS deployment guide
+- `QUICK_REFERENCE.md` - This file
 
 ---
 
@@ -129,7 +118,7 @@ context_files/                 # Full documentation
 
 1. **Development**: Make changes, auto-reload enabled
 2. **Testing**: Run scanners on your AWS account
-3. **Deployment**: Follow `context_files/deployment/SERVERLESS_DEPLOYMENT.md`
+3. **Deployment**: Follow `DEPLOY_AWS_MANUAL.md`
 4. **Production**: Configure Aurora Serverless v2
 
 ---

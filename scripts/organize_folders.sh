@@ -40,9 +40,7 @@ print_status "Created config/ directory"
 mkdir -p tests
 print_status "Created tests/ directory"
 
-# 4. Docs folder for quick reference docs
-mkdir -p docs
-print_status "Created docs/ directory"
+# Note: docs/ folder has been archived
 
 # Move development scripts
 print_info "Organizing development scripts..."
@@ -62,10 +60,7 @@ print_info "Organizing configuration files..."
 mv serverless-local.yml config/ 2>/dev/null || true
 print_status "Configuration files moved to config/"
 
-# Move documentation
-print_info "Organizing documentation..."
-mv LOCAL_RUNNING.md docs/ 2>/dev/null || true
-print_status "Documentation moved to docs/"
+# Note: Documentation has been consolidated into README.md
 
 # Move test database
 print_info "Cleaning up test files..."
@@ -135,22 +130,6 @@ This directory contains test files and test databases.
 Tests are run automatically during development with hot reload enabled.
 EOF
 
-cat > docs/README.md << 'EOF'
-# Documentation
-
-Quick reference documentation for local development.
-
-## Files
-- `LOCAL_RUNNING.md` - Information about running servers locally
-
-## More Documentation
-
-For comprehensive documentation, see the `context_files/` directory:
-- Deployment guides: `context_files/deployment/`
-- Project docs: `context_files/project_docs/`
-- Security analysis: `context_files/security_analysis/`
-EOF
-
 print_status "README files created"
 
 echo ""
@@ -166,13 +145,11 @@ echo "     └── scan_all_buckets.py"
 echo ""
 echo "  📁 config/             (configuration files)"
 echo "  📁 tests/              (test files & databases)"
-echo "  📁 docs/               (quick reference docs)"
 echo ""
 echo "  📁 lambda/             (Lambda functions)"
 echo "  📁 scanners/           (Scanner modules)"
 echo "  📁 policies/           (OPA policies)"
 echo "  📁 webapp/             (Web application)"
-echo "  📁 context_files/      (Documentation archive)"
 echo ""
 echo "Root directory now contains only:"
 echo "  - serverless.yml"

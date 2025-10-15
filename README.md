@@ -116,10 +116,6 @@ grc_ai_privacy/
 ├── test_structure.py              # Structure validation tests
 ├── .gitignore                     # Git ignore file
 │
-├── docs/                          # Documentation
-│   ├── ISO_CONTROL_MAPPING.md     # Control overlap analysis
-│   ├── 90_DAY_IMPLEMENTATION_PLAN.md  # Implementation timeline
-│   └── PROJECT_README.md          # Detailed project docs
 │
 └── README.md                      # This file
 ```
@@ -243,7 +239,6 @@ deny[msg] if {
 - 📋 Complete documentation and training
 - 📋 12 single-standard controls implemented
 
-See [90_DAY_IMPLEMENTATION_PLAN.md](docs/90_DAY_IMPLEMENTATION_PLAN.md) for detailed timeline.
 
 ## 🧪 Testing
 
@@ -276,9 +271,7 @@ safety check
 
 ## 📚 Documentation
 
-- **[ISO Control Mapping](docs/ISO_CONTROL_MAPPING.md)** - Detailed control overlap analysis
-- **[90-Day Implementation Plan](docs/90_DAY_IMPLEMENTATION_PLAN.md)** - Phased deployment timeline
-- **[Project README](docs/PROJECT_README.md)** - Comprehensive project documentation
+See README.md and DEPLOY_AWS_MANUAL.md for complete documentation.
 
 ## 🎯 Use Cases
 
@@ -346,12 +339,8 @@ The project follows a clean, organized structure:
 ├── webapp/           # Web application (FastAPI + React)
 ├── scripts/          # Utility and development scripts
 ├── config/           # Configuration files
-├── tests/            # Test files and databases
-├── docs/             # Quick reference documentation
-└── context_files/    # Complete documentation archive
+└── tests/            # Test files and databases
 ```
-
-See `PROJECT_STRUCTURE.md` for detailed organization.
 
 ## 🚀 Quick Start
 
@@ -376,11 +365,6 @@ serverless deploy --stage prod
 
 ## 📚 Documentation
 
-- **Quick Reference**: `docs/` directory
-- **Project Structure**: `PROJECT_STRUCTURE.md`
-- **Deployment Guides**: `context_files/deployment/`
-- **Project Documentation**: `context_files/project_docs/`
-- **Security & Cost Analysis**: `context_files/security_analysis/`
-- **Complete History**: `context_files/security_analysis/CONVERSATION_CONTEXT.md`
-
-See `context_files/README.md` for a complete documentation index.
+- **Main Documentation**: `README.md` (this file)
+- **Deployment Guide**: `DEPLOY_AWS_MANUAL.md`
+- **Quick Reference**: `QUICK_REFERENCE.md`
