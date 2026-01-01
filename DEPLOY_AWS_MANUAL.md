@@ -1,10 +1,10 @@
-# 🚀 Manual AWS Deployment Guide
+# Manual AWS Deployment Guide
 
 **Region**: us-east-1
 
 ---
 
-## ⚠️ Important: Aurora Serverless Setup Required
+## Important: Aurora Serverless Setup Required
 
 Before deploying the Lambda functions, you need to set up Aurora Serverless v2 database.
 
@@ -14,7 +14,7 @@ If you want to deploy just the Lambda functions without the database first:
 
 ```bash
 # Deploy without database (will fail on first API call but Lambda will be deployed)
-npx serverless deploy --stage dev --region us-east-1
+npm run deploy
 ```
 
 ### Option 2: Create Aurora Serverless First (Recommended)
@@ -23,7 +23,7 @@ This will take 10-15 minutes but is required for the app to work.
 
 ---
 
-## 📋 Step-by-Step Deployment
+## Step-by-Step Deployment
 
 ### Step 1: Create Aurora Serverless v2 Database
 
@@ -170,13 +170,16 @@ echo "AURORA_SECRET_ARN=$AURORA_SECRET_ARN"
 export AURORA_CLUSTER_ARN="<your-cluster-arn>"
 export AURORA_SECRET_ARN="<your-secret-arn>"
 
-# Deploy to AWS
-npx serverless deploy --stage dev --region us-east-1 --verbose
+# Deploy to development
+npm run deploy
+
+# Or deploy to production
+npm run deploy:prod
 ```
 
 ---
 
-## 🎯 Quick Deploy (If Database Already Exists)
+## Quick Deploy (If Database Already Exists)
 
 If you already have Aurora Serverless set up:
 
@@ -185,51 +188,56 @@ If you already have Aurora Serverless set up:
 export AURORA_CLUSTER_ARN="arn:aws:rds:us-east-1:YOUR_ACCOUNT_ID:cluster:grc-aurora-dev"
 export AURORA_SECRET_ARN="arn:aws:secretsmanager:us-east-1:YOUR_ACCOUNT_ID:secret:grc/database-dev-xxxxx"
 
-# Deploy
-npx serverless deploy --stage dev --region us-east-1
+# Deploy to development
+npm run deploy
+
+# Deploy to production
+npm run deploy:prod
 ```
 
 ---
 
-## 🧪 Test Deployment
+## Test Deployment
 
 ```bash
-# Get API endpoint
-API_URL=$(npx serverless info --stage dev --region us-east-1 | grep "ANY" | grep -oE "https://[^ ]+" | head -1)
-API_URL=${API_URL%/{proxy+}}
+# Get API endpoint from serverless info
+serverless info --stage dev
 
-# Test health
-curl $API_URL/health
+# Test health endpoint
+curl https://YOUR_API_ID.execute-api.us-east-1.amazonaws.com/health
 
 # View API docs
-echo "API Documentation: $API_URL/docs"
+open https://YOUR_API_ID.execute-api.us-east-1.amazonaws.com/docs
 
 # Initialize database
-curl -X POST $API_URL/api/v1/admin/init-db
+curl -X POST https://YOUR_API_ID.execute-api.us-east-1.amazonaws.com/api/v1/admin/init-db
 ```
 
 ---
 
-## 📊 View Deployment Info
+## View Deployment Info
 
 ```bash
 # View all deployment info
-npx serverless info --stage dev --region us-east-1
+serverless info --stage dev
 
-# View logs
-npx serverless logs -f api --tail --stage dev
+# View logs (using npm script)
+npm run logs
 
-# View metrics
-npx serverless metrics --stage dev
+# Or view logs directly
+serverless logs -f api --tail --stage dev
 ```
 
 ---
 
-## 🗑️ Remove Deployment
+## Remove Deployment
 
 ```bash
 # Remove all Lambda functions and resources
-npx serverless remove --stage dev --region us-east-1
+npm run remove
+
+# Or remove specific stage
+serverless remove --stage dev
 
 # Delete Aurora cluster (if needed)
 aws rds delete-db-instance \
@@ -251,7 +259,7 @@ aws secretsmanager delete-secret \
 
 ---
 
-## 💰 Cost Estimate
+## Cost Estimate
 
 - **Aurora Serverless v2**: $15-30/month (with auto-pause)
 - **Lambda**: $5-10/month
@@ -262,7 +270,7 @@ aws secretsmanager delete-secret \
 
 ---
 
-## ⚠️ Troubleshooting
+## Troubleshooting
 
 ### Issue: VPC/Subnet not found
 - Use default VPC or create one
@@ -274,8 +282,49 @@ aws secretsmanager delete-secret \
 
 ### Issue: Deployment fails
 - Check CloudFormation console for detailed errors
-- View logs: `npx serverless logs -f api --stage dev`
+- View logs: `npm run logs` or `serverless logs -f api --stage dev`
+- Verify environment variables are set: `echo $AURORA_CLUSTER_ARN`
+
+### Issue: Python version mismatch
+- Ensure Python 3.11 is installed: `python3.11 --version`
+- Update serverless.yml runtime if needed
+- Rebuild dependencies: `rm -rf node_modules && npm install`
 
 ---
+
+## Prerequisites
+
+Before deploying, ensure you have:
+
+- **Python 3.11+** installed and configured
+- **Node.js and npm** for serverless framework
+- **AWS CLI** configured with appropriate credentials
+- **IAM permissions** for RDS, Lambda, API Gateway, DynamoDB, Secrets Manager
+
+```bash
+# Verify prerequisites
+python3.11 --version
+node --version
+npm --version
+aws --version
+aws sts get-caller-identity
+```
+
+## Environment Setup
+
+```bash
+# Create virtual environment
+python3.11 -m venv venv
+source venv/bin/activate
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Install Node.js dependencies
+npm install
+
+# Verify serverless installation
+serverless --version
+```
 
 **Ready to deploy!** Start with Step 1 to create the Aurora database.

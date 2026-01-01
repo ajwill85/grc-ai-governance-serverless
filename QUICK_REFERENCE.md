@@ -1,15 +1,39 @@
-# 🚀 Quick Reference Card
+# Quick Reference Card
 
 **Project**: GRC AI Governance Framework (Serverless)  
-**Status**: ✅ Organized & Running
+**Status**: Organized & Running
 
 ---
 
-## 📍 Essential Commands
+## Essential Commands
+
+### Setup Environment
+```bash
+# Create and activate virtual environment
+python3.11 -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your AWS credentials
+```
 
 ### Start Local Development
 ```bash
-# Backend API (port 8001)
+# Activate virtual environment
+source venv/bin/activate
+
+# Load environment variables
+source .env
+
+# Start serverless offline (API on port 3000)
+npm start
+
+# Alternative: Backend API directly (port 8001)
 python3 scripts/local/run_local_app.py
 
 # Frontend React (port 3001)
@@ -28,15 +52,21 @@ python3 scripts/scan_all_buckets.py --region us-east-1
 ### Deploy to AWS
 ```bash
 # Development
-serverless deploy --stage dev
+npm run deploy
 
 # Production
-serverless deploy --stage prod
+npm run deploy:prod
+
+# Remove deployment
+npm run remove
+
+# View logs
+npm run logs
 ```
 
 ---
 
-## 📁 Where to Find Things
+## Where to Find Things
 
 | What | Where |
 |------|-------|
@@ -51,17 +81,18 @@ serverless deploy --stage prod
 
 ---
 
-## 🌐 Local URLs
+## Local URLs
 
 | Service | URL |
 |---------|-----|
-| **Backend API** | http://localhost:8001 |
+| **Serverless Offline API** | http://localhost:3000 |
+| **Backend API (direct)** | http://localhost:8001 |
 | **API Docs** | http://localhost:8001/docs |
 | **Frontend** | http://localhost:3001 |
 
 ---
 
-## 📊 Project Stats
+## Project Stats
 
 - **Total Files**: ~150
 - **Core Directories**: 10
@@ -72,11 +103,11 @@ serverless deploy --stage prod
 
 ---
 
-## 🔧 Common Tasks
+## Common Tasks
 
 ### Check Health
 ```bash
-curl http://localhost:8001/health
+curl http://localhost:3000/health
 ```
 
 ### View API Docs
@@ -86,7 +117,26 @@ open http://localhost:8001/docs
 
 ### Run Tests
 ```bash
-python3 scripts/local/test_local.py
+# Activate virtual environment first
+source venv/bin/activate
+
+# Run unit tests
+pytest tests/ -v --cov=scanners
+
+# Test OPA policies
+opa test policies/ -v
+```
+
+### Security Audit
+```bash
+# Python packages
+safety scan
+
+# Node.js packages
+npm audit
+
+# Code security scan
+bandit -r scanners/ lambda/ webapp/
 ```
 
 ### View Project Files
@@ -106,7 +156,7 @@ rm tests/*.db
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 - `README.md` - Main project documentation
 - `DEPLOY_AWS_MANUAL.md` - AWS deployment guide
@@ -114,7 +164,7 @@ rm tests/*.db
 
 ---
 
-## 🎯 Next Steps
+## Next Steps
 
 1. **Development**: Make changes, auto-reload enabled
 2. **Testing**: Run scanners on your AWS account
@@ -123,19 +173,22 @@ rm tests/*.db
 
 ---
 
-## ⚡ Shortcuts
+## Shortcuts
 
 | Action | Command |
 |--------|---------|
+| **Activate venv** | `source venv/bin/activate` |
+| **Start serverless** | `npm start` |
 | **Start backend** | `python3 scripts/local/run_local_app.py` |
 | **Start frontend** | `cd webapp/frontend && npm run dev` |
-| **Deploy** | `serverless deploy` |
-| **View logs** | `serverless logs -f api --tail` |
-| **Run scanner** | `python3 scripts/scan_all.py` |
+| **Deploy** | `npm run deploy` |
+| **View logs** | `npm run logs` |
+| **Run scanner** | `python scripts/scan_all.py --region us-east-1` |
+| **Security audit** | `safety scan && npm audit` |
 
 ---
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Port in use?
 ```bash
@@ -148,13 +201,38 @@ uvicorn app.main:app --port 8002
 
 ### Dependencies missing?
 ```bash
-# Python
-pip3 install -r requirements.txt
-pip3 install -r webapp/backend/requirements.txt
+# Python (use virtual environment)
+source venv/bin/activate
+pip install -r requirements.txt
+pip install -r webapp/backend/requirements.txt
 
 # Node.js
 npm install
 cd webapp/frontend && npm install
+```
+
+### Python version issues?
+```bash
+# Check Python version (requires 3.11+)
+python3.11 --version
+
+# Recreate virtual environment with Python 3.11
+rm -rf venv
+python3.11 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Environment variables not set?
+```bash
+# Copy example file
+cp .env.example .env
+
+# Edit with your values
+vim .env
+
+# Load environment variables
+source .env
 ```
 
 ### Clean start?
@@ -171,4 +249,21 @@ cd webapp/frontend && npm install
 
 ---
 
-**Keep this card handy for quick reference!** 📌
+**Keep this handy for quick reference!**
+
+## Python Version
+
+**Required**: Python 3.11+  
+**Current**: Python 3.11.14 (in venv)
+
+## Key Dependencies
+
+- boto3: 1.42.19
+- botocore: 1.42.19
+- black: 25.11.0
+- bandit: 1.9.2
+- jinja2: 3.1.6
+- pandas: 2.3.3
+- serverless: 3.38.0
+
+All packages are secure and up to date.

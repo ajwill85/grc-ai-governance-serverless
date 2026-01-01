@@ -2,13 +2,13 @@
 
 A comprehensive security and compliance framework for AWS AI/ML systems, implementing automated controls across ISO 27001, ISO 27701, and ISO 42001 standards.
 
-## 🎯 Project Overview
+## Project Overview
 
 This framework provides automated policy enforcement, security scanning, and compliance monitoring for AWS SageMaker and related AI/ML services. It demonstrates practical implementation of AI governance principles using policy-as-code and infrastructure automation.
 
 **Portfolio Project by AJ Williams** | [ajwill.ai](https://www.ajwill.ai)
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -35,26 +35,33 @@ This framework provides automated policy enforcement, security scanning, and com
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## ✨ Features
+## Features
 
 ### Policy-as-Code (OPA/Rego)
-- ✅ SageMaker encryption enforcement
-- ✅ Network isolation validation
-- ✅ IAM least privilege checks
-- ✅ Data classification requirements
+- SageMaker encryption enforcement
+- Network isolation validation
+- IAM least privilege checks
+- Data classification requirements
 
 ### Python Security Scanners
-- ✅ SageMaker resource scanner
-- ✅ IAM role analyzer
-- ✅ S3 bucket governance checker
-- ✅ Unified reporting engine
+- SageMaker resource scanner
+- IAM role analyzer
+- S3 bucket governance checker
+- Unified reporting engine
+
+### Serverless Architecture
+- AWS Lambda functions for API and background workers
+- API Gateway for RESTful endpoints
+- DynamoDB for caching
+- SQS for asynchronous scan jobs
+- S3 for scan results storage
 
 ### Compliance Coverage
-- ✅ **ISO 27001** - Information Security (25 controls)
-- ✅ **ISO 27701** - Privacy Management (18 controls)
-- ✅ **ISO 42001** - AI Management (12 controls)
+- **ISO 27001** - Information Security (25 controls)
+- **ISO 27701** - Privacy Management (18 controls)
+- **ISO 42001** - AI Management (12 controls)
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -63,25 +70,59 @@ This framework provides automated policy enforcement, security scanning, and com
 aws configure
 
 # Python 3.11+
-python --version
+python3.11 --version
 
-# Install dependencies
+# Node.js and npm for serverless framework
+node --version
+npm --version
+
+# Create virtual environment and install Python dependencies
+python3.11 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
+
+# Install Node.js dependencies
+npm install
 
 # Install OPA (optional, for policy testing)
 brew install opa  # macOS
+```
+
+### Local Development
+
+```bash
+# Activate virtual environment
+source venv/bin/activate
+
+# Set environment variables (create .env file first)
+source .env
+
+# Start serverless offline
+npm start
+
+# API will be available at http://localhost:3000
 ```
 
 ### Run Security Scan
 
 ```bash
 # Run unified scan across all resources
-python scan_all.py --region us-east-1
+python scripts/scan_all.py --region us-east-1
 
 # Run individual scanners
 python -m scanners.sagemaker_scanner --region us-east-1
 python -m scanners.iam_scanner
 python -m scanners.s3_scanner --region us-east-1
+```
+
+### Deploy to AWS
+
+```bash
+# Deploy to development
+npm run deploy
+
+# Deploy to production
+npm run deploy:prod
 ```
 
 ### Test OPA Policies
@@ -94,15 +135,17 @@ opa test policies/ -v
 opa eval -d policies/ -i test_data/sample_notebook.json "data.sagemaker.encryption.deny"
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
-grc_ai_privacy/
-├── policies/                      # OPA policy definitions
-│   ├── sagemaker_encryption.rego  # Encryption controls
-│   ├── sagemaker_network.rego     # Network security
-│   ├── iam_least_privilege.rego   # Access controls
-│   └── data_classification.rego   # Data governance
+grc-ai-governance-serverless/
+├── lambda/                        # AWS Lambda functions
+│   ├── api/                       # API Gateway handler
+│   └── workers/                   # Background workers (scanner, scheduled)
+│
+├── webapp/                        # Web application
+│   ├── backend/                   # FastAPI backend
+│   └── frontend/                  # React frontend
 │
 ├── scanners/                      # Python security scanners
 │   ├── sagemaker_scanner.py       # SageMaker resource scanner
@@ -110,17 +153,26 @@ grc_ai_privacy/
 │   ├── s3_scanner.py              # S3 bucket checker
 │   └── __init__.py
 │
-├── scan_all.py                    # Unified scanner CLI
+├── policies/                      # OPA policy definitions
+│   ├── sagemaker_encryption.rego  # Encryption controls
+│   ├── sagemaker_network.rego     # Network security
+│   ├── iam_least_privilege.rego   # Access controls
+│   └── data_classification.rego   # Data governance
+│
+├── scripts/                       # Utility scripts
+│   ├── scan_all.py                # Unified scanner CLI
+│   └── local/                     # Local development scripts
+│
+├── config/                        # Configuration files
+├── tests/                         # Test files
+├── serverless.yml                 # Serverless Framework configuration
 ├── requirements.txt               # Python dependencies
-├── test_syntax.py                 # Syntax validation tests
-├── test_structure.py              # Structure validation tests
-├── .gitignore                     # Git ignore file
-│
-│
+├── package.json                   # Node.js dependencies
+├── .env.example                   # Environment variables template
 └── README.md                      # This file
 ```
 
-## 📊 Sample Output
+## Sample Output
 
 ### Console Output
 ```
@@ -169,7 +221,7 @@ Severity Breakdown:
 }
 ```
 
-## 🔍 OPA Policy Examples
+## OPA Policy Examples
 
 ### SageMaker Encryption Policy
 ```rego
@@ -197,7 +249,7 @@ deny[msg] if {
 }
 ```
 
-## 🎓 Skills Demonstrated
+## Skills Demonstrated
 
 ### Technical Skills
 - **Cloud Security**: AWS IAM, KMS, VPC, Security Hub
@@ -207,8 +259,8 @@ deny[msg] if {
 - **Data Privacy**: PII detection, data classification, retention
 
 ### GRC Frameworks
-- **ISO 27001:2022** - Information Security Management
-- **ISO 27701:2019** - Privacy Information Management
+- **ISO 27001:2022** - Information Security Management System
+- **ISO 27701:2019** - Privacy Information Management System
 - **ISO 42001:2023** - AI Management System
 - **NIST AI RMF** - AI Risk Management Framework
 
@@ -219,61 +271,73 @@ deny[msg] if {
 - KMS (encryption key management)
 - CloudTrail (audit logging)
 
-## 📈 Implementation Roadmap
+## Implementation Roadmap
 
-### Phase 1: Foundation (Days 1-30)
-- ✅ Core OPA policies for encryption, access control, data governance
-- ✅ Python scanners for SageMaker, IAM, S3
-- ✅ Automated reporting and evidence collection
-- ✅ 25 triple-overlap controls implemented
+### Phase 1: Foundation (Completed)
+- Core OPA policies for encryption, access control, data governance
+- Python scanners for SageMaker, IAM, S3
+- Automated reporting and evidence collection
+- Serverless architecture with Lambda, API Gateway, DynamoDB
+- 25 triple-overlap controls implemented
 
-### Phase 2: Advanced Controls (Days 31-60)
-- 🔄 Privacy-enhancing technologies (PETs)
-- 🔄 Bias detection and fairness metrics
-- 🔄 Model monitoring and drift detection
-- 🔄 18 double-overlap controls implemented
+### Phase 2: Advanced Controls (In Progress)
+- Privacy-enhancing technologies (PETs)
+- Bias detection and fairness metrics
+- Model monitoring and drift detection
+- 18 double-overlap controls implemented
 
-### Phase 3: Optimization (Days 61-90)
-- 📋 Business continuity procedures
-- 📋 AI ethics framework
-- 📋 Complete documentation and training
-- 📋 12 single-standard controls implemented
+### Phase 3: Optimization (Planned)
+- Business continuity procedures
+- AI ethics framework
+- Complete documentation and training
+- 12 single-standard controls implemented
 
 
-## 🧪 Testing
+## Testing
 
-### Quick Validation (No AWS Required)
-
-```bash
-# Validate Python syntax
-python3 test_syntax.py
-
-# Validate code structure
-python3 test_structure.py
-```
-
-### Full Testing (Requires Dependencies)
+### Python Testing
 
 ```bash
-# Install dependencies first
-pip install -r requirements.txt
+# Activate virtual environment
+source venv/bin/activate
 
-# Run Python unit tests (when implemented)
+# Run unit tests
 pytest tests/ -v --cov=scanners
 
-# Test OPA policies (requires OPA binary)
-opa test policies/ -v
-
 # Run security checks
-bandit -r scanners/
-safety check
+bandit -r scanners/ lambda/ webapp/
+
+# Check for vulnerable dependencies
+safety scan
 ```
 
-## 📚 Documentation
+### OPA Policy Testing
 
-See README.md and DEPLOY_AWS_MANUAL.md for complete documentation.
+```bash
+# Test all policies
+opa test policies/ -v
 
-## 🎯 Use Cases
+# Evaluate policy against sample data
+opa eval -d policies/ -i test_data/sample_notebook.json "data.sagemaker.encryption.deny"
+```
+
+### Security Audit
+
+```bash
+# Python packages
+pip list | grep -E "(boto3|bandit|jinja2|black)"
+
+# Node.js packages
+npm audit
+```
+
+## Documentation
+
+- **Main Documentation**: `README.md` (this file)
+- **Deployment Guide**: `DEPLOY_AWS_MANUAL.md`
+- **Quick Reference**: `QUICK_REFERENCE.md`
+
+## Use Cases
 
 ### For Security Teams
 - Automated compliance monitoring for AI/ML systems
@@ -290,17 +354,18 @@ See README.md and DEPLOY_AWS_MANUAL.md for complete documentation.
 - Automated control testing
 - Executive risk reporting
 
-## 🔐 Security Best Practices
+## Security Best Practices
 
 This framework implements:
-- ✅ Encryption at rest and in transit
-- ✅ Least privilege access control
-- ✅ Network isolation for sensitive workloads
-- ✅ Data classification and retention policies
-- ✅ Audit logging and monitoring
-- ✅ Privacy-by-design principles
+- Encryption at rest and in transit
+- Least privilege access control
+- Network isolation for sensitive workloads
+- Data classification and retention policies
+- Audit logging and monitoring
+- Privacy-by-design principles
+- Regular security audits and dependency updates
 
-## 🤝 Contributing
+## Contributing
 
 This is a portfolio project demonstrating GRC engineering capabilities. For questions or collaboration:
 
@@ -308,11 +373,11 @@ This is a portfolio project demonstrating GRC engineering capabilities. For ques
 - **Email**: [Contact via portfolio]
 - **LinkedIn**: [Connect via portfolio]
 
-## 📄 License
+## License
 
 © 2025 AJ Williams. Portfolio demonstration project.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - AWS Well-Architected Framework - Security Pillar
 - Open Policy Agent Community
@@ -322,49 +387,6 @@ This is a portfolio project demonstrating GRC engineering capabilities. For ques
 
 ---
 
-**Built with** ❤️ **for AI Governance and Privacy**
+**Built for AI Governance and Privacy**
 
 *Demonstrating practical implementation of security, privacy, and AI governance controls for AWS environments.*
-
----
-
-## 📁 Project Structure
-
-The project follows a clean, organized structure:
-
-```
-├── lambda/           # Serverless functions
-├── scanners/         # AWS resource scanners  
-├── policies/         # OPA policy rules
-├── webapp/           # Web application (FastAPI + React)
-├── scripts/          # Utility and development scripts
-├── config/           # Configuration files
-└── tests/            # Test files and databases
-```
-
-## 🚀 Quick Start
-
-### Local Development
-```bash
-# Run backend API
-python3 scripts/local/run_local_app.py
-
-# Run frontend (in another terminal)
-cd webapp/frontend && npm run dev
-```
-
-### Run Scanners
-```bash
-python3 scripts/scan_all.py --region us-east-1
-```
-
-### Deploy to AWS
-```bash
-serverless deploy --stage prod
-```
-
-## 📚 Documentation
-
-- **Main Documentation**: `README.md` (this file)
-- **Deployment Guide**: `DEPLOY_AWS_MANUAL.md`
-- **Quick Reference**: `QUICK_REFERENCE.md`
