@@ -4,8 +4,12 @@ boto3==1.34.0
 botocore==1.34.0
 
 # FastAPI and dependencies
-fastapi==0.104.1
-pydantic==2.5.0
+# fastapi 0.164.0 is the earliest release that requires starlette>=1.6.0.
+# pydantic 2.9.0 is the minimum that release accepts.
+fastapi==0.164.0
+starlette==1.6.0
+pydantic==2.9.0
+python-multipart==0.0.34
 uvicorn==0.24.0
 
 # Database
@@ -13,10 +17,11 @@ sqlalchemy==2.0.23
 psycopg2-binary==2.9.9
 
 # Scanners
-pandas==2.0.0
-numpy==1.24.0
-pyyaml==6.0
+# Minimum releases that publish Python 3.12 wheels.
+pandas==2.1.1
+numpy==1.26.0
+pyyaml==6.0.1
 
 # Utilities
 python-dateutil==2.8.2
-jinja2==3.1.2
+jinja2==3.1.6

@@ -4,7 +4,7 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: python3.9
+  runtime: python3.12
   region: ${opt:region, 'us-east-1'}
   stage: ${opt:stage, 'dev'}
   memorySize: 512
@@ -109,7 +109,7 @@ layers:
   pythonRequirements:
     path: lambda/layers
     compatibleRuntimes:
-      - python3.9
+      - python3.12
 
 resources:
   Resources:
